@@ -105,7 +105,7 @@ python main.py --cfg configs/jrdb.yml --mode train --manual_seed 0
 python main.py --cfg configs/jrdb.yml --mode test --model_ckpt logs/JRDB/model_opt --exp_name eval --manual_seed 0
 ```
 
-### ETH/UCY
+### ETH-UCY
 
 Train and evaluate each split separately, with its own weights and logs.
 
