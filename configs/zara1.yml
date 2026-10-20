@@ -1,0 +1,39 @@
+# dataset
+dataset_type: 'ETH'
+model_name: patchformer
+scene_names: ['zara1']  # ['eth', 'hotel', 'univ', 'zara1', 'zara2']
+obs_len: 8
+pred_len: 12
+num_epoch: 51
+batchsize: 32   # 12
+test_bs: 16
+num_sample: 20
+data_scale: 5
+padding: 'LastFrame'
+# Patchization trajectory
+patch_size: 2
+stride: 2
+patch_list: [2, 4, 8]
+patch_stride_mode: nonoverlap
+dynamic_patch: True
+num_experts: 4
+fusion_mode: bidirectional
+# optimizer
+lr: 1e-3
+weight_decay: 1e-4
+decay_step: 8
+decay_gamma: 0.5
+milestone: [25, 50, 75, 100]
+# hyper parameter for training loss
+hyper_param1: 5   # 5
+hyper_param2: 1   # 1
+freq_recon_lambda: 1.0
+# initialize the transformer para
+num_layers: 2
+num_heads: 2
+latent_dims: 128
+patch_embed: 128
+dropout: 0.2
+# other settings
+ema: False
+n_pre: 8

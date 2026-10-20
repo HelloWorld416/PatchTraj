@@ -1,0 +1,45 @@
+# Python and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+# Local editor settings and credentials
+.idea/
+.vscode/
+.DS_Store
+.env
+.env.*
+*.pem
+*.key
+
+# Keep dataset loaders; obtain dataset files separately.
+/datasets/*
+!/datasets/__init__.py
+!/datasets/data_process.py
+
+# Experiment outputs and downloaded weights
+/checkpoints/
+/checkpoint/
+/logs/
+/visualizations/
+*.pt
+*.pth
+*.ckpt
+*.npy
+*.npz
+*.pkl
+model_opt*
+
+# Legacy experiments not used by the released entry points
+/model/mamba_model.py
+/model/model.py
+/utils.py
+/visualize_*.py
+/tool/visualize_trajs.py
+/tool/*.png
+/tool/*.jpg

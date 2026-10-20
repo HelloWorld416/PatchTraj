@@ -1,0 +1,40 @@
+# dataset
+dataset_type: 'SDD'
+model_name: patchformer
+scene_names: None
+obs_len: 8
+pred_len: 12
+num_epoch: 51 # 101
+batchsize: 64  # 64
+num_sample: 20  # 20
+data_scale: 50
+padding: 'LastFrame'
+# Patchization trajectory
+patch_size: 2
+stride: 2
+patch_list: [2, 4, 8]
+#patch_list: [2]
+patch_stride_mode: nonoverlap
+dynamic_patch: True
+num_experts: 4
+fusion_mode: bidirectional
+# optimizer
+lr: 1e-3
+weight_decay: 1e-4
+decay_step: 8  # 10
+decay_gamma: 0.5
+#milestone: [25, 50, 75, 100]
+# hyper parameter for training
+hyper_param1: 1 # 2
+hyper_param2: 0 # 1
+freq_recon_lambda: 1.0
+scale: 1  # 5
+# initialize the transformer para
+num_layers: 2
+num_heads: 4
+latent_dims: 128
+patch_embed: 128
+dropout: 0.1
+# other settings
+ema: False
+n_pre: 8
