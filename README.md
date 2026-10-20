@@ -1,6 +1,6 @@
 # PatchTraj
 
-PyTorch implementation of PatchTraj for multimodal trajectory prediction, combining multi-scale trajectory patches, mixture-of-experts patch embedding, and time/frequency feature fusion. The frequency stream uses the discrete cosine transform (DCT).
+PyTorch implementation of **PatchTraj: Dual-Domain Temporal-Spectral Representation Learning with Multi-Scale Patches for Trajectory Prediction**.
 
 ## Environment
 
@@ -21,7 +21,7 @@ pip install torch==1.12.0+cu113 --extra-index-url https://download.pytorch.org/w
 pip install -r requirements.txt
 ```
 
-Release smoke tests use Python 3.10 and PyTorch 1.12.0. Dependency ranges are not a claim that every version combination has been tested. Mamba, torchvision, and torchaudio are not required.
+Release smoke tests use Python 3.10 and PyTorch 1.12.0. Dependency ranges are not a claim that every version combination has been tested.
 
 ## Data Preparation
 
@@ -47,14 +47,7 @@ datasets/
 └── zara2/{train,val,test}/*.txt
 ```
 
-Dataset files are not distributed in this repository. For JRDB, supply the preprocessed files from the original project distribution; this release does not provide a public JRDB download or a raw-data preprocessing pipeline. `--data_path /path/to/datasets` overrides the root for all datasets.
-
-Expected formats:
-
-- **SDD:** NumPy arrays `(N, 20, C)`, with x/y positions in the first two channels. The supplied validation file is used for evaluation.
-- **NBA:** NumPy arrays `(N, 30, 11, 2)`. The loader converts coordinates using `94 / 28` and uses at most 32,500 training and 12,500 test sequences before augmentation.
-- **JRDB:** A pickle containing trajectories `(total_agents, 21, 2)`, agent counts per sequence, and sequence counts per scene, in that order.
-- **ETH/UCY:** Tab-separated frame ID, pedestrian ID, x, and y. Each scene directory contains its training and evaluation splits.
+Dataset files are not distributed in this repository. For JRDB, supply the preprocessed files from the original project distribution [LED](https://github.com/MediaBrain-SJTU/LED); this release does not provide a public JRDB download or a raw-data preprocessing pipeline. `--data_path /path/to/datasets` overrides the root for all datasets.
 
 ## Configuration
 
@@ -65,7 +58,6 @@ Expected formats:
 | JRDB | `configs/jrdb.yml` | 9 | 12 | 9 | 3, 9 | 20 |
 | ETH/UCY | `configs/{eth,hotel,univ,zara1,zara2}.yml` | 8 | 12 | 8 | 2, 4, 8 | 20 |
 
-The default model is named `patchformer` in the code. YAML files control dimensions, optimizer settings, batches, and training duration. Defaults use bidirectional fusion and a frequency reconstruction loss weight of `1.0`.
 
 ## Training and Evaluation
 
@@ -132,10 +124,6 @@ for scene in eth hotel univ zara1 zara2; do
   python main.py --cfg "configs/${scene}.yml" --mode test --model_ckpt "logs/ETH/${scene}/model_opt" --exp_name "${scene}_eval" --manual_seed 0
 done
 ```
-
-### Evaluation Metrics
-
-Metrics are printed to the console. ADE/FDE select the best predicted sample. NBA reports horizons of 1, 2, 3, and 4 seconds; JRDB reports 1.2, 2.4, 3.6, and 4.8 seconds. ETH/UCY and SDD also report APD. The existing JADE/JFDE implementation selects a shared sample across each evaluation batch, then averages batch values; these metrics depend on batch composition. APD uses normalized model coordinates; displacement errors are rescaled with `data_scale`.
 
 ## License
 
